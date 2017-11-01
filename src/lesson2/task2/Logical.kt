@@ -2,6 +2,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import java.lang.Math.sqrt
 
 /**
  * Пример
@@ -17,7 +18,11 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = TODO()
+fun isNumberHappy(number: Int): Boolean {
+    val n1 = number % 1000
+    val n2 = n1 % 100
+    return (number / 1000 + n1 / 100 == n2 / 10 + n2 % 10)
+}
 
 /**
  * Простая
@@ -26,7 +31,10 @@ fun isNumberHappy(number: Int): Boolean = TODO()
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
+    return if (x1 == x2 || y1 == y2 || (x1 == y2 && y1 == x2)) true
+    else return false
+}
 
 /**
  * Средняя
@@ -36,7 +44,15 @@ fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
  * Вернуть true, если утверждение верно
  */
 fun circleInside(x1: Double, y1: Double, r1: Double,
-                 x2: Double, y2: Double, r2: Double): Boolean = TODO()
+                 x2: Double, y2: Double, r2: Double): Boolean {
+    val cl = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
+    if (sqr(x1 - x2) + sqr(y1 - y2) <= sqr(r2)){
+        return if (x1 == x2 && y1 == y2 && r1 <= r2) true
+        else return if (cl + r1 <= r2) true
+        else return false
+    }
+    else return false
+}
 
 /**
  * Средняя
@@ -47,4 +63,7 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    return if ((a <= r && b <= s || a <= s && b <= r) || (a <= r && c <= s || a <= s && c <= r) || (b <= r && c <= s || b <= s && c <= r)) true
+    else return false
+}
