@@ -64,8 +64,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
     val s = sagenes * 48.0 * 4.445
     val a = arshins * 16.0 * 4.445
     val v = vershoks * 4.445
-    val len = (s + a + v) / 100.0
-    return len
+    return (s + a + v) / 100.0
 }
 
 /**
@@ -114,8 +113,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
 fun accountInThreeYears(initial: Int, percent: Int): Double {
     val x1 = (initial / 100.0) * (percent + 100.0)
     val x2 = (x1 / 100.0) * (percent + 100.0)
-    val x3 = (x2 / 100.0) * (percent + 100.0)
-    return x3
+    return (x2 / 100.0) * (percent + 100.0)
 }
 
 /**
