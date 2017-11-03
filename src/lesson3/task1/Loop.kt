@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson3.task1
 
+import java.lang.Math.abs
 import java.lang.Math.sqrt
 
 /**
@@ -65,10 +66,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var count = 0
     var num = n
-    if ( num == 0) return 1
-    while ( num > 0){
+    if (num == 0) return 1
+    while (abs(num) > 0) {
         num /= 10
-        count ++
+        count++
     }
     return count
 }
@@ -83,7 +84,7 @@ fun fib(n: Int): Int {
     var num = 0
     var count = 1
     while ( count < n){
-        var t = k
+        val t = k
         k += num
         num = t
         count ++
@@ -98,12 +99,10 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var k = 1
-    while (k < m * n){
-        if (k % m == 0 && k % n == 0) break
-        else k++
+    for (k in 1..m * n){
+        if (k % m == 0 && k % n == 0) return k
     }
-    return k
+    return 1
 }
 
 /**
@@ -234,12 +233,11 @@ fun hasDifferentDigits(n: Int): Boolean {
 fun squareSequenceDigit(n: Int): Int {
     var count = 0
     var x = 0
-    var q = 0
     while (count < n) {
         x++
         count += digitNumber(x * x)
     }
-    q = x * x
+    var q = x * x
     for (x in n until count){
         q /= 10
     }
