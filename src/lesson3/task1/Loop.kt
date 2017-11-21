@@ -99,10 +99,15 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    for (k in 1..m * n){
-        if (k % m == 0 && k % n == 0) return k
+    var a = m
+    var b = n
+    while (a != b){
+        when{
+            a > b -> a -= b
+            else -> b -= a
+        }
     }
-    return 1
+    return m / a * n
 }
 
 /**
@@ -116,7 +121,7 @@ fun minDivisor(n: Int): Int {
        if (n % m == 0) break
         else m++
     }
-     return m
+    return m
 }
 
 /**
@@ -125,13 +130,14 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-    var m = n - 1
-    while (m >= 1){
-        if (n % m == 0) break
-        else m -= 1
+    var result = 0
+    for (m in n - 1 downTo 1) {
+        result = m
+        if (n % m == 0)  break
     }
-    return m
+    return result
 }
+
 /**
  * Простая
  *
@@ -139,17 +145,7 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean {
-    if (n < m)
-        for (del in 2..n){
-            if (n % del == 0 && m % del == 0) return false
-        }
-    else
-        for (del in 2..m) {
-            if (n % del == 0 && m % del == 0) return false
-        }
-    return true
-}
+fun isCoPrime(m: Int, n: Int): Boolean = lcm(m, n) == m * n
 
 /**
  * Простая
@@ -206,11 +202,7 @@ fun revert(n: Int): Int {
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean {
-    val n1 = n
-    val n2 = revert(n)
-    return (n1 == n2)
-}
+fun isPalindrome(n: Int): Boolean = n == revert(n)
 
 /**
  * Средняя
@@ -266,7 +258,7 @@ fun fibSequenceDigit(n: Int): Int {
         x++
         count += digitNumber(fib(x))
     }
-    q = fib(q)
+    q = fib(x)
     for (x in n until count){
         q /= 10
     }
