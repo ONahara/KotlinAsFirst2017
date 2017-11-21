@@ -65,7 +65,7 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
     val a = arshins * 16.0 * 4.445
     val v = vershoks * 4.445
     return (s + a + v) / 100.0
-}
+    }
 
 /**
  * Тривиальная
@@ -103,7 +103,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
     val a = hoursDepart * 60 + minutesDepart
     val b = hoursArrive * 60 + minutesArrive
     return b - a
-}
+    }
 
 /**
  * Простая
@@ -126,4 +126,4 @@ fun numberRevert(number: Int): Int {
     val n2 = number % 100 / 10
     val n3 = number % 10
     return n3 * 100 + n2 * 10 + n1
-}
+    }
