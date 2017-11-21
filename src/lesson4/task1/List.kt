@@ -229,7 +229,20 @@ fun factorizeToString(n: Int): String {
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    val result = mutableListOf<Int>()
+    var x = n
+    return if (x == 0) listOf(x)
+    else {
+        while (x > 0) {
+            var f = x
+            f %= base
+            result.add(0, f)
+            x /= base
+        }
+        return result
+    }
+}
 
 /**
  * Сложная
@@ -259,7 +272,13 @@ fun decimal(digits: List<Int>, base: Int): Int = TODO()
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int {
+    var x = 0
+    for (i in 0 until digits.size){
+        x = digits[i] + x * base
+    }
+    return x
+}
 
 /**
  * Сложная
