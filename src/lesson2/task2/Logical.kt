@@ -32,10 +32,8 @@ fun isNumberHappy(number: Int): Boolean {
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    return if (x1 == x2 || y1 == y2 || (x1 == y2 && y1 == x2) || (abs(x1 - y1) == abs(x2 - y2))) true
-    else return false
-}
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+    x1 == x2 || y1 == y2 || abs(x1 - x2) == abs(y1 - y2)
 
 /**
  * Средняя
@@ -64,7 +62,10 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    return if ((a <= r && b <= s || a <= s && b <= r) || (a <= r && c <= s || a <= s && c <= r) || (b <= r && c <= s || b <= s && c <= r)) true
-    else return false
-}
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = 
+    when {
+    a <= r && b <= s || a <= s && b <= r -> true
+    a <= r && c <= s || a <= s && c <= r -> true
+    b <= r && c <= s || b <= s && c <= r -> true
+    else -> false
+    }
