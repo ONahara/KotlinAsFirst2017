@@ -111,7 +111,9 @@ fun dateDigitToStr(digital: String): String {
             i++
             when {
                 i == 0 && parts[0].toInt() in 0..31 -> dateToStr.add((part.toInt()).toString())
-                i == 1 -> dateToStr.add(listOfMonths[(parts[1].toInt()) % 10])
+                i == 1 -> 
+                  if (parts[1].toInt() in 1..9) dateToStr.add(listOfMonths[(parts[1].toInt()) % 10])
+                  else dateToStr.add(listOfMonths[(parts[1].toInt()) % 10 + 10])
                 i == 2 && parts[2].toInt() >= 0 -> dateToStr.add(part)
             }
         }
