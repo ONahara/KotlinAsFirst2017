@@ -88,7 +88,7 @@ fun dateStrToDigit(str: String): String {
     catch (e: Exception){
         return ""
     }
-    return String.format("%02d.%02d.%04d", day, month, year)
+    return String.format("%02d.%02d.%01d", day, month, year)
 }
 
 /**
@@ -103,15 +103,15 @@ fun dateDigitToStr(digital: String): String {
     if (parts.size != 3) return ""
     var i = -1
     val dateToStr: MutableList<String> = mutableListOf()
-    val listOfMonths = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля",
-            "августа", "сентября", "октября", "ноября", "декабря")
+    val listOfMonths = listOf("", "января", "февраля", "марта", "апреля", "мая", "июня",
+                              "июля", "августа", "сентября", "октября", "ноября", "декабря")
     for (part in parts) {
         try {
-            if (parts[1].toInt() < 1 || parts[1].toInt() > 32) return ""
+            if (parts[1].toInt() < 1 || parts[1].toInt() > 12) return ""
             i++
             when {
                 i == 0 && parts[0].toInt() in 0..31 -> dateToStr.add((part.toInt()).toString())
-                i == 1 && parts[1].toInt() in 1..12 -> dateToStr.add(listOfMonths[(part[1].toInt()) % 10 + 1])
+                i == 1 -> dateToStr.add(listOfMonths[(parts[1].toInt()) % 10])
                 i == 2 && parts[2].toInt() >= 0 -> dateToStr.add(part)
             }
         }
