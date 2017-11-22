@@ -203,14 +203,15 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  */
 fun factorize(n: Int): List<Int> {
     val result = mutableListOf<Int>()
-    var t = n
-    while (t > 1){
-        val x = minDivisor(t)
-        t /= x
+    var number = n
+    while (number > 1){
+        val x = minDivisor(number)
         result.add(x)
+        number /= x
     }
     return result
 }
+
 /**
  * Сложная
  *
@@ -222,6 +223,7 @@ fun factorizeToString(n: Int): String {
     val list = factorize(n)
     return list.joinToString(separator = "*")
 }
+
 /**
  * Средняя
  *
