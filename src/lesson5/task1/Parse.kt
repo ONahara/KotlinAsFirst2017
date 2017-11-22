@@ -66,7 +66,30 @@ fun main(args: Array<String>) {
  * День и месяц всегда представлять двумя цифрами, например: 03.04.2011.
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    if (parts.size != 3) return ""
+    var i = -1
+    val listOfMonths = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля",
+            "августа", "сентября", "октября", "ноября", "декабря")
+    var day = 0
+    var month = 0
+    var year = 0
+    for (part in parts)
+    try {
+        if (parts[1] !in listOfMonths) return ""
+        i++
+        when {
+             i == 0 && parts[0].toInt() in 1 until 32 -> day = part.toInt()
+             i == 1 && parts[1] in listOfMonths -> month = listOfMonths.indexOf(part) + 1
+             i == 2 && parts[2].toInt() >= 0 -> year = part.toInt()
+        }
+    }
+    catch (e: Exception){
+        return ""
+    }
+    return String.format("%02d.%02d.%04d", day, month, year)
+}
 
 /**
  * Средняя
@@ -75,7 +98,29 @@ fun dateStrToDigit(str: String): String = TODO()
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    if (parts.size != 3) return ""
+    var i = -1
+    val dateToStr: MutableList<String> = mutableListOf()
+    val listOfMonths = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля",
+            "августа", "сентября", "октября", "ноября", "декабря")
+    for (part in parts) {
+        try {
+            if (parts[1].toInt() < 1 || parts[1].toInt() > 32) return ""
+            i++
+            when {
+                i == 0 && parts[0].toInt() in 0..31 -> dateToStr.add((part.toInt()).toString())
+                i == 1 && parts[1].toInt() in 1..12 -> dateToStr.add(listOfMonths[(part[1].toInt()) % 10 + 1])
+                i == 2 && parts[2].toInt() >= 0 -> dateToStr.add(part)
+            }
+        }
+        catch (e: Exception){
+            return ""
+        }
+    }
+    return dateToStr.joinToString(separator = " ")
+}
 
 /**
  * Средняя
