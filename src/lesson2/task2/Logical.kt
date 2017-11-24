@@ -46,11 +46,13 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean {
     val cl = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
     if (sqr(x1 - x2) + sqr(y1 - y2) <= sqr(r2)){
-        return if (x1 == x2 && y1 == y2 && r1 <= r2) true
-        else return if (cl + r1 <= r2) true
-        else return false
+        when {
+            x1 == x2 && y1 == y2 && r1 <= r2 -> return true
+            cl + r1 <= r2 -> return true
+            cl + r1 <= r2 -> return true
+        }
     }
-    else return false
+    return false
 }
 
 /**
@@ -64,8 +66,8 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = 
     when {
-    a <= r && b <= s || a <= s && b <= r -> true
-    a <= r && c <= s || a <= s && c <= r -> true
-    b <= r && c <= s || b <= s && c <= r -> true
-    else -> false
+        a <= r && b <= s || a <= s && b <= r -> true
+        a <= r && c <= s || a <= s && c <= r -> true
+        b <= r && c <= s || b <= s && c <= r -> true
+        else -> false
     }
