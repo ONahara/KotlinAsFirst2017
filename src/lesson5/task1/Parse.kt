@@ -82,7 +82,7 @@ fun dateStrToDigit(str: String): String {
             i++
             when {
                 i == 0 && parts[0].toInt() in 1 until 32 -> day = part.toInt()
-                i == 1 && parts[1] in listOfMonths -> month = listOfMonths.indexOf(part) + 1
+                i == 1 && parts[1] in listOfMonths -> month = listOfMonths.indexOf(part)
                 i == 2 && parts[2].toInt() >= 0 -> year = part.toInt()
             }
         }
