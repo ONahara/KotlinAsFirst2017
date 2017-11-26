@@ -157,7 +157,28 @@ fun bishopMoveNumber(start: Square, end: Square): Int {
  *          bishopTrajectory(Square(1, 3), Square(6, 8)) = listOf(Square(1, 3), Square(6, 8))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun bishopTrajectory(start: Square, end: Square): List<Square> {
+    val steps = mutableListOf(start)
+    val numberOfSteps = bishopMoveNumber(start, end)
+    when (numberOfSteps) {
+        0 -> return steps
+        2 -> {
+            var position1 = (((start.row - start.column) + (end.column + end.row)) / 2)
+            var position2 = ((((start.row - start.column) + (end.column + end.row)) / 2) - (start.row - start.column))
+            if (!Square(position1, position2).inside()) {
+                position1 = (((start.row + start.column) + (end.row - end.column)) / 2)
+                position2 = ((((start.row + start.column) + (end.row - end.column)) / 2) - (end.row - end.column))
+                steps.add(Square(position2, position1))
+            } else steps.add(Square(position2, position1))
+            steps.add(Square(end.column, end.row))
+        }
+        1 -> {
+            steps.add(Square(end.column, end.row))
+        }
+        else -> return emptyList()
+    }
+    return steps
+}
 
 /**
  * Средняя
