@@ -134,7 +134,23 @@ fun dateDigitToStr(digital: String): String {
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    val parts = phone.split(" ", "(", ")", "-", "")
+    val list = mutableListOf<String>()
+    if (parts[1] == "+") list.add("+")
+    for (part in parts){
+        try {
+            if (part.toInt() % 1 == 0)
+            list.add(part)
+            else return ""
+        }
+        catch (e: NumberFormatException) {
+            if (!part.equals("+") && !part.equals(""))
+            return ""
+        }
+    }
+    return list.joinToString(separator = "")
+}
 
 /**
  * Средняя
@@ -220,7 +236,22 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть положительными
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    val parts = description.split(" ", "; ")
+    val listOfProducts = mutableListOf<String>()
+    var max = 0.0
+    for (i in 0 until parts.size step 2){
+        try {
+            if (parts[i + 1].toDouble() > max)
+                listOfProducts.add(parts[i])
+                max = parts[i + 1].toDouble()
+        }
+        catch (e: Exception){
+            return ""
+        }
+    }
+    return listOfProducts.last()
+}
 
 /**
  * Сложная
