@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson6.task2
 
+val listOfColumn = listOf("", "a", "b", "c", "d", "e", "f", "g", "h")
 /**
  * Клетка шахматной доски. Шахматная доска квадратная и имеет 8 х 8 клеток.
  * Поэтому, обе координаты клетки (горизонталь row, вертикаль column) могут находиться в пределах от 1 до 8.
@@ -21,7 +22,10 @@ data class Square(val column: Int, val row: Int) {
      * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
      * Для клетки не в пределах доски вернуть пустую строку
      */
-    fun notation(): String = TODO()
+    fun notation(): String {
+        if (!inside()) return ""
+        return "${listOfColumn[column]}$row"
+    }
 }
 
 /**
@@ -31,7 +35,11 @@ data class Square(val column: Int, val row: Int) {
  * В нотации, колонки обозначаются латинскими буквами от a до h, а ряды -- цифрами от 1 до 8.
  * Если нотация некорректна, бросить IllegalArgumentException
  */
-fun square(notation: String): Square = TODO()
+fun square(notation: String): Square {
+    val parts = notation.split("")
+    if (parts[1] !in listOfColumn || parts[2].toInt() !in 1..8) throw IllegalArgumentException()
+    return Square(listOfColumn.indexOf(parts[1]), parts[2].toInt())
+}
 
 /**
  * Простая
@@ -56,7 +64,15 @@ fun square(notation: String): Square = TODO()
  * Пример: rookMoveNumber(Square(3, 1), Square(6, 3)) = 2
  * Ладья может пройти через клетку (3, 3) или через клетку (6, 1) к клетке (6, 3).
  */
-fun rookMoveNumber(start: Square, end: Square): Int = TODO()
+
+fun rookMoveNumber(start: Square, end: Square): Int {
+    if (!start.inside() || !end.inside()) throw IllegalArgumentException()
+    return when {
+        start.column != end.column && start.row != end.row -> 2
+        start.column == end.column && start.row == end.row -> 0
+        else -> 1
+    }
+}
 
 /**
  * Средняя
@@ -72,7 +88,21 @@ fun rookMoveNumber(start: Square, end: Square): Int = TODO()
  *          rookTrajectory(Square(3, 5), Square(8, 5)) = listOf(Square(3, 5), Square(8, 5))
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun rookTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun rookTrajectory(start: Square, end: Square): List<Square> {
+    val steps = mutableListOf(start)
+    val numberOfSteps = rookMoveNumber(start, end)
+    when (numberOfSteps) {
+        2 -> {
+            steps.add(Square(end.column, start.row))
+            steps.add(Square(end.column, end.row))
+        }
+        1 -> {
+            steps.add(Square(end.column, end.row))
+        }
+        else -> return steps
+    }
+    return steps
+}
 
 /**
  * Простая
@@ -97,7 +127,16 @@ fun rookTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Примеры: bishopMoveNumber(Square(3, 1), Square(6, 3)) = -1; bishopMoveNumber(Square(3, 1), Square(3, 7)) = 2.
  * Слон может пройти через клетку (6, 4) к клетке (3, 7).
  */
-fun bishopMoveNumber(start: Square, end: Square): Int = TODO()
+fun bishopMoveNumber(start: Square, end: Square): Int {
+    if (!start.inside() || !end.inside()) throw IllegalArgumentException()
+    return when {
+        start.column == end.column && start.row == end.row -> 0
+        Math.abs(end.column - start.column) == Math.abs(end.row - start.row) -> 1
+        (start.column + start.row) % 2 == 0 && (end.column + end.row) % 2 == 0 -> 2
+        (start.column + start.row) % 2 == 1 && (end.column + end.row) % 2 == 1 -> 2
+        else -> -1
+    }
+}
 
 /**
  * Сложная
@@ -139,7 +178,16 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> = TODO()
  * Пример: kingMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
-fun kingMoveNumber(start: Square, end: Square): Int = TODO()
+
+fun kingMoveNumber(start: Square, end: Square): Int {
+    if (!start.inside() || !end.inside()) throw IllegalArgumentException()
+    return when {
+        end.column == start.column -> Math.abs(end.row - start.row)
+        end.row == start.row -> Math.abs(end.column - start.column)
+        end.column != start.column && end.row != start.row -> Math.abs(start.row - end.row)
+        else -> 0
+    }
+}
 
 /**
  * Сложная
