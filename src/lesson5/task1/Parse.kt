@@ -196,7 +196,7 @@ fun bestHighJump(jumps: String): Int {
             if ((parts[i + 1] == "+" || parts[i + 1] == "%+" || parts[i + 1] == "%%+") && parts[i].toInt() > max)
                 max = parts[i].toInt()
         }
-        catch (e: Exception){
+        catch (e: IndexOutOfBoundsException){
             return -1
         }
     }
@@ -246,7 +246,7 @@ fun mostExpensive(description: String): String {
                 listOfProducts.add(parts[i])
                 max = parts[i + 1].toDouble()
         }
-        catch (e: Exception){
+        catch (e: IndexOutOfBoundsException){
             return ""
         }
     }
