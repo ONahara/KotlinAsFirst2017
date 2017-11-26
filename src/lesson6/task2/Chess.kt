@@ -36,7 +36,7 @@ data class Square(val column: Int, val row: Int) {
  * Если нотация некорректна, бросить IllegalArgumentException
  */
 fun square(notation: String): Square {
-    if (notation.isEmpty()) throw IllegalArgumentException()
+    if (notation.length != 2) throw IllegalArgumentException()
     val parts = notation.split("")
     if (parts[1] !in listOfColumn || parts[2].toInt() !in 1..8) throw IllegalArgumentException()
     return Square(listOfColumn.indexOf(parts[1]), parts[2].toInt())
