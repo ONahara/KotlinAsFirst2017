@@ -237,16 +237,17 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * Все цены должны быть положительными
  */
 fun mostExpensive(description: String): String {
-    val parts = description.split(" ", "; ")
+    val parts = description.split(" ", ";")
+    if (parts.size < 2) return ""
     val listOfProducts = mutableListOf<String>()
-    var max = 0.0
-    for (i in 0 until parts.size step 2){
+    var max = -1.0
+    for (i in 0 until parts.size step 3){
         try {
             if (parts[i + 1].toDouble() > max)
                 listOfProducts.add(parts[i])
                 max = parts[i + 1].toDouble()
         }
-        catch (e: IndexOutOfBoundsException){
+        catch (description: IndexOutOfBoundsException){
             return ""
         }
     }
