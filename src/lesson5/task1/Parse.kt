@@ -193,7 +193,7 @@ fun bestHighJump(jumps: String): Int {
     var max = -1
     for (i in 0 until parts.size step 2) {
         try {
-            if (parts[i + 1] == "+" || parts[i + 1] == "%+" || parts[i + 1] == "%%+" && parts[i].toInt() > max)
+            if ((parts[i + 1] == "+" || parts[i + 1] == "%+" || parts[i + 1] == "%%+") && parts[i].toInt() > max)
                 max = parts[i].toInt()
         }
         catch (e: Exception){
