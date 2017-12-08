@@ -72,23 +72,17 @@ val listOfMonths = listOf("", "января", "февраля", "марта", "�
 fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
     if (parts.size != 3) return ""
-    var i = -1
     var day = 0
     var month = 0
     var year = 0
-    for (part in parts) {
-        try {
-            if (parts[1] !in listOfMonths) return ""
-            i++
-            when {
-                i == 0 && parts[0].toInt() in 1 until 32 -> day = part.toInt()
-                i == 1 && parts[1] in listOfMonths -> month = listOfMonths.indexOf(part)
-                i == 2 && parts[2].toInt() >= 0 -> year = part.toInt()
-            }
-        }
-        catch (e: NumberFormatException){
-            return ""
-        }
+    try {
+        if (parts[0].toInt() in 1..31 && parts[1] in listOfMonths && parts[2].toInt() >= 0) {
+            day = parts[0].toInt()
+            month = listOfMonths.indexOf(parts[1])
+            year = parts[2].toInt()
+        } else return ""
+    } catch (e: NumberFormatException) {
+        return ""
     }
     return String.format("%02d.%02d.%01d", day, month, year)
 }
@@ -103,21 +97,18 @@ fun dateStrToDigit(str: String): String {
 fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
     if (parts.size != 3) return ""
-    var i = -1
     val dateToStr: MutableList<String> = mutableListOf()
-    for (part in parts) {
-        try {
-            if (parts[1].toInt() < 1 || parts[1].toInt() > 12) return ""
-            i++
-            when {
-                i == 0 && parts[0].toInt() in 0..31 -> dateToStr.add((part.toInt()).toString())
-                i == 1 -> dateToStr.add(listOfMonths[parts[1].toInt()])
-                i == 2 && parts[2].toInt() >= 0 -> dateToStr.add(part)
-            }
-        }
-        catch (e: NumberFormatException){
-            return ""
-        }
+    try {
+        val dayInt = parts[0].toInt()
+        val monthInt = parts[1].toInt()
+        val yearInt = parts[2].toInt()
+        if (dayInt in 1..31 && monthInt in 1..12 && yearInt >= 0) {
+            dateToStr.add(dayInt.toString())
+            dateToStr.add(listOfMonths[monthInt])
+            dateToStr.add(yearInt.toString())
+        } else return ""
+    } catch (e: NumberFormatException) {
+        return ""
     }
     return dateToStr.joinToString(separator = " ")
 }
@@ -167,12 +158,10 @@ fun bestLongJump(jumps: String): Int {
     var max = -1
     for (part in parts) {
         try {
-            if (part.toInt() > max)
+            if (part != "-" && part != "%" && part != "" && part.toInt() > max)
                 max = part.toInt()
-        }
-        catch (e: IllegalArgumentException){
-            if (part != "-" && part != "%" && part != "")
-                return -1
+        } catch (e: NumberFormatException) {
+            return -1
         }
     }
     return max
@@ -190,13 +179,13 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     val parts = jumps.split(" ")
+    if (parts.size < 2) return -1
     var max = -1
     for (i in 0 until parts.size step 2) {
         try {
             if ((parts[i + 1] == "+" || parts[i + 1] == "%+" || parts[i + 1] == "%%+") && parts[i].toInt() > max)
                 max = parts[i].toInt()
-        }
-        catch (e: IndexOutOfBoundsException){
+        } catch (e: NumberFormatException) {
             return -1
         }
     }
@@ -243,12 +232,12 @@ fun mostExpensive(description: String): String {
     var max = -1.0
     for (i in 0 until parts.size step 2){
         try {
-            if (parts[i + 1].toDouble() > max){
+            if (parts[i + 1].toDouble() > max) {
                 listOfProducts.add(parts[i])
                 max = parts[i + 1].toDouble()
             }
         }
-        catch (description: IndexOutOfBoundsException){
+        catch (e: IllegalArgumentException){
             return ""
         }
     }
