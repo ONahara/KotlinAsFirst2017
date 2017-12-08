@@ -46,10 +46,11 @@ fun circleInside(x1: Double, y1: Double, r1: Double,
                  x2: Double, y2: Double, r2: Double): Boolean {
     val cl = sqrt(sqr(x1 - x2) + sqr(y1 - y2))
     if (sqr(x1 - x2) + sqr(y1 - y2) <= sqr(r2)) {
-        when {
-            x1 == x2 && y1 == y2 && r1 <= r2 -> return true
-            cl + r1 <= r2 -> return true
-            cl + r1 <= r2 -> return true
+        return when {
+            x1 == x2 && y1 == y2 && r1 <= r2 -> true
+            cl + r1 <= r2 -> true
+            cl + r1 <= r2 -> true
+            else -> false
         }
     }
     return false
