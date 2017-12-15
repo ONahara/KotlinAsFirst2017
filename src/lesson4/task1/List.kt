@@ -167,10 +167,10 @@ fun times(a: List<Double>, b: List<Double>): Double {
  */
 fun polynom(p: List<Double>, x: Double): Double {
     var pol = 0.0
-        for (i in 0 until p.size) {
-            pol += p[i] * pow(x, i.toDouble())
-        }
-        return pol
+    for (i in 0 until p.size) {
+        pol += p[i] * pow(x, i.toDouble())
+    }
+    return pol
 }
 
 /**
