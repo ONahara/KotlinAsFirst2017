@@ -129,13 +129,11 @@ fun rookTrajectory(start: Square, end: Square): List<Square> {
  * Слон может пройти через клетку (6, 4) к клетке (3, 7).
  */
 fun bishopMoveNumber(start: Square, end: Square): Int {
-    val startSum = start.column + start.row
-    val endSum = end.column + end.row
     if (!start.inside() || !end.inside()) throw IllegalArgumentException()
     return when {
         start.column == end.column && start.row == end.row -> 0
         Math.abs(end.column - start.column) == Math.abs(end.row - start.row) -> 1
-        (startSum % 2 == 0 && endSum % 2 == 0) || (startSum % 2 == 1 && endSum % 2 == 1) -> 2
+        (start.column + start.row + end.column + end.row) % 2 == 0 -> 2
         else -> -1
     }
 }
@@ -202,15 +200,7 @@ fun bishopTrajectory(start: Square, end: Square): List<Square> {
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
 
-fun kingMoveNumber(start: Square, end: Square): Int {
-    if (!start.inside() || !end.inside()) throw IllegalArgumentException()
-    return when {
-        end.column == start.column -> Math.abs(end.row - start.row)
-        end.row == start.row -> Math.abs(end.column - start.column)
-        end.column != start.column && end.row != start.row -> Math.abs(start.row - end.row)
-        else -> 0
-    }
-}
+fun kingMoveNumber(start: Square, end: Square): Int = TODO()
 
 /**
  * Сложная
