@@ -99,9 +99,9 @@ fun dateDigitToStr(digital: String): String {
     if (parts.size != 3) return ""
     val dateToStr: MutableList<String> = mutableListOf()
     try {
-        val dayInt = parts[0].toInt()
-        val monthInt = parts[1].toInt()
-        val yearInt = parts[2].toInt()
+        val day = parts[0].toInt()
+        val month = parts[1].toInt()
+        val year = parts[2].toInt()
         if (dayInt in 1..31 && monthInt in 1..12 && yearInt >= 0) {
             dateToStr.add(dayInt.toString())
             dateToStr.add(listOfMonths[monthInt])
@@ -237,7 +237,7 @@ fun mostExpensive(description: String): String {
                 max = parts[i + 1].toDouble()
             }
         }
-        catch (e: IllegalArgumentException){
+        catch (e: NumberFormatException){
             return ""
         }
     }
