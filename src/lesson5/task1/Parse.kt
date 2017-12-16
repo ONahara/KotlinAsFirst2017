@@ -102,10 +102,10 @@ fun dateDigitToStr(digital: String): String {
         val day = parts[0].toInt()
         val month = parts[1].toInt()
         val year = parts[2].toInt()
-        if (dayInt in 1..31 && monthInt in 1..12 && yearInt >= 0) {
-            dateToStr.add(dayInt.toString())
-            dateToStr.add(listOfMonths[monthInt])
-            dateToStr.add(yearInt.toString())
+        if (day in 1..31 && month in 1..12 && year >= 0) {
+            dateToStr.add(day.toString())
+            dateToStr.add(listOfMonths[month])
+            dateToStr.add(year.toString())
         } else return ""
     } catch (e: NumberFormatException) {
         return ""
