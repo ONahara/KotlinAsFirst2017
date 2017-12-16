@@ -59,7 +59,42 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSpiral(height: Int, width: Int): Matrix<Int> {
+    var result = createMatrix(height, width, 1)
+    var a = 0
+    var b = width - 1
+    var c = 0
+    var d = height - 1
+    var n = 1
+    while (n < width * height) {
+        for (i in c..b) {
+            if (c > height * width) break
+            result[a, i] = n
+            n++
+        }
+        a++
+        for (i in a..d) {
+            if (c > height * width) break
+            result[i, b] = n
+            n++
+        }
+        b--
+        for (i in b downTo c) {
+            if (c > height * width) break
+            result[d, i] = n
+            n++
+        }
+        d--
+        for (i in d downTo a) {
+            if (c > height * width) break
+            result[i, c] = n
+            n++
+        }
+        c++
+    }
+    if ((height == width) && (height % 2 == 1)) result[height / 2, width / 2] = height * width
+    return result
+}
 
 /**
  * Сложная
@@ -75,7 +110,44 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    var result = createMatrix(height, width, 1)
+    var a = 0
+    var b = width - 1
+    var c = 0
+    var d = height - 1
+    var n = 1
+    var m = 1
+    while (m < width * height) {
+        for (i in c..b) {
+            if (c > height * width) break
+            result[a, i] = n
+            m++
+        }
+        a++
+        for (i in a..d) {
+            if (c > height * width) break
+            result[i, b] = n
+            m++
+        }
+        b--
+        for (i in b downTo c) {
+            if (c > height * width) break
+            result[d, i] = n
+            m++
+        }
+        d--
+        for (i in d downTo a) {
+            if (c > height * width) break
+            result[i, c] = n
+            m++
+        }
+        c++
+        n++
+    }
+    if ((height == width) && (height % 2 == 1)) result[height / 2, width / 2] = n
+    return result
+}
 
 /**
  * Сложная
