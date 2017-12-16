@@ -45,25 +45,57 @@ fun <E> createMatrix(height: Int, width: Int, e: E): Matrix<E> = TODO()
  *
  * Реализация интерфейса "матрица"
  */
-class MatrixImpl<E> : Matrix<E> {
-    override val height: Int = TODO()
+class MatrixImpl<E>(override val height: Int, override val width: Int, e: E) : Matrix<E> {
+    val list = MutableList(height) { MutableList(width) { e } }
 
-    override val width: Int = TODO()
+    override fun get(row: Int, column: Int): E {
+        if ((row in 0..height) && (column in 0..width))
+            return list[row][column]
+        else throw IllegalArgumentException()
+    }
 
-    override fun get(row: Int, column: Int): E  = TODO()
-
-    override fun get(cell: Cell): E  = TODO()
+    override fun get(cell: Cell): E = get(cell.row, cell.column)
 
     override fun set(row: Int, column: Int, value: E) {
-        TODO()
+        if ((row in 0..height) && (column in 0..width))
+            list[row][column] = value
+        else throw IllegalArgumentException()
     }
 
-    override fun set(cell: Cell, value: E) {
-        TODO()
+    override fun set(cell: Cell, value: E) = set(cell.row, cell.column, value)
+
+    override fun equals(other: Any?): Boolean {
+        if ((other is MatrixImpl<*>) && (other.height == height) && (other.width == width)) {
+            for (i in 0 until height) {
+                for (j in 0 until width) {
+                    if (list[i][j] == other[i, j]) return true
+                }
+            }
+        }
+        return false
     }
 
-    override fun equals(other: Any?) = TODO()
+    override fun toString(): String {
+        val sb = StringBuilder()
+        sb.append("[")
+        for (row in 0 until height){
+            sb.append("[")
+            for (column in 0 until width){
+                sb.append(this[row, column])
+                if (column != height) sb.append(", ")
+            }
+            sb.append("]")
+            if (row != height) sb.append("\n")
+        }
+        sb.append("]")
+        return sb.toString()
+    }
 
-    override fun toString(): String = TODO()
+    override fun hashCode(): Int {
+        var result = height
+        result = 31 * result + width
+        result = 31 * result + list.hashCode()
+        return result
+    }
 }
 
